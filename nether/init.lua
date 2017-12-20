@@ -714,7 +714,7 @@ local function get(tab, z,y,x)
 end
 
 local function remove(tab, z,y,x)
-        if vector.get_data_from_pos(tab, z,y,x) == nil then
+        if get(tab, z,y,x) == nil then
                 return
         end
         tab[z][y][x] = nil
