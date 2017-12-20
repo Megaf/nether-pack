@@ -829,8 +829,42 @@ function nether.grow_tree(pos, generated)
 	local fruits = {}
 	local trunk_ps = {}
 	local count = 0
-	local ps, trmin, trmax, trunk_count = vector.get_data_pos_table(trunks)
 
+local function funcs.get_data_pos_table(tab)
+	local t,n = {},1
+	local minz, miny, minx, maxz, maxy, maxx
+	for z,yxs in pairs(tab) do
+		if not minz then
+			minz = z
+			maxz = z
+		else
+			minz = math.min(minz, z)
+			maxz = math.max(maxz, z)
+		end
+		for y,xs in pairs(yxs) do
+			if not miny then
+				miny = y
+				maxy = y
+			else
+				miny = math.min(miny, y)
+				maxy = math.max(maxy, y)
+			end
+			for x,v in pairs(xs) do
+				if not minx then
+					minx = x
+					maxx = x
+				else
+					minx = math.min(minx, x)
+					maxx = math.max(maxx, x)
+				end
+				t[n] = {z,y,x, v}
+				n = n+1
+			end
+		end
+	end
+	return t, {x=minx, y=miny, z=minz}, {x=maxx, y=maxy, z=maxz}, n-1
+end
+	
 	update_minmax(min, max, trmin)
 	update_minmax(min, max, trmax)
 
