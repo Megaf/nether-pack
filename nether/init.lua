@@ -131,7 +131,7 @@ local function table_contains(t, v)
 end
 
 -- Function from vector_extras - added by Megaf.
-local function funcs.get_data_pos_table(tab)
+local function get_data_pos_table(tab)
 	local t,n = {},1
 	local minz, miny, minx, maxz, maxy, maxx
 	for z,yxs in pairs(tab) do
