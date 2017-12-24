@@ -799,9 +799,7 @@ local leaf_thickness = 3 --a bigger number results in more blank trees
 local h_trunk_max = h_max-h_arm_max
 
 function nether.grow_tree(pos, generated)
-	local t1 = os.clock()
-	local ps, trmin, trmax, trunk_count = get_data_pos_table(trunks)
-	
+	local t1 = os.clock()	
 	if not contents_defined then
 		define_contents()
 		contents_defined = true
@@ -867,6 +865,7 @@ function nether.grow_tree(pos, generated)
 	local fruits = {}
 	local trunk_ps = {}
 	local count = 0
+	local ps, trmin, trmax, trunk_count = get_data_pos_table(trunks)
 
 	update_minmax(min, max, trmin)
 	update_minmax(min, max, trmax)
