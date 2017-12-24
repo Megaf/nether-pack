@@ -130,6 +130,43 @@ local function table_contains(t, v)
 	return false
 end
 
+-- Function from vector_extras - added by Megaf.
+local function get_data_pos_table(tab)
+	local t,n = {},1
+	local minz, miny, minx, maxz, maxy, maxx
+	for z,yxs in pairs(tab) do
+		if not minz then
+			minz = z
+			maxz = z
+		else
+			minz = math.min(minz, z)
+			maxz = math.max(maxz, z)
+		end
+		for y,xs in pairs(yxs) do
+			if not miny then
+				miny = y
+				maxy = y
+			else
+				miny = math.min(miny, y)
+				maxy = math.max(maxy, y)
+			end
+			for x,v in pairs(xs) do
+				if not minx then
+					minx = x
+					maxx = x
+				else
+					minx = math.min(minx, x)
+					maxx = math.max(maxx, x)
+				end
+				t[n] = {z,y,x, v}
+				n = n+1
+			end
+		end
+	end
+	return t, {x=minx, y=miny, z=minz}, {x=maxx, y=maxy, z=maxz}, n-1
+end
+
+
 -- Weierstrass function stuff from https://github.com/slemonide/gen
 local SIZE = 1000
 local ssize = math.ceil(math.abs(SIZE))
@@ -763,7 +800,8 @@ local h_trunk_max = h_max-h_arm_max
 
 function nether.grow_tree(pos, generated)
 	local t1 = os.clock()
-
+	local ps, trmin, trmax, trunk_count = get_data_pos_table(trunks)
+	
 	if not contents_defined then
 		define_contents()
 		contents_defined = true
@@ -829,7 +867,6 @@ function nether.grow_tree(pos, generated)
 	local fruits = {}
 	local trunk_ps = {}
 	local count = 0
-	local ps, trmin, trmax, trunk_count = vector.get_data_pos_table(trunks)
 
 	update_minmax(min, max, trmin)
 	update_minmax(min, max, trmax)
