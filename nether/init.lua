@@ -995,6 +995,7 @@ local function grass_allowed(pos)
 	if not nd or nd == "ignore" then
 		return 0
 	end
+	print(nd)
 	local data = minetest.registered_nodes[nd]
 	local drawtype = data.drawtype
 	if drawtype
