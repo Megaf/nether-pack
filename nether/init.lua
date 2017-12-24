@@ -992,7 +992,7 @@ local function grass_allowed(pos)
 	if nd == "air" then
 		return true
 	end
-	if nd == "ignore" then
+	if not nd or nd == "ignore" then
 		return 0
 	end
 	local data = minetest.registered_nodes[nd]
